@@ -1,4 +1,4 @@
-ERD (Database 설계)
+# 🗂 ERD (Database 설계)
 <img width="1474" height="1343" alt="0_전체_ERD" src="https://github.com/user-attachments/assets/0090521c-2fcc-409b-b374-9a6287c658a9" />
 <img width="985" height="1363" alt="06_AI_ERD" src="https://github.com/user-attachments/assets/1f7b6456-2ed1-4bd3-ad56-3868f69b5e93" />
 <img width="816" height="1401" alt="05_채팅_알람_ERD" src="https://github.com/user-attachments/assets/a53c1df5-b972-4278-958f-cf3f5576aa91" />
