@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.routeinai.backend.inbody.mapper.InBodyMapper">
+    <resultMap id="InBodyResultMap" type="com.routeinai.backend.inbody.entity.InBody">
+        <id property="measurementId" column="measurement_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="weight" column="weight"/>
+        <result property="skeletalMuscleMass" column="skeletal_muscle_mass"/>
+        <result property="bodyFatMass" column="body_fat_mass"/>
+        <result property="measuredDt" column="measured_dt"/>
+        <result property="createDt" column="create_dt"/>
+    </resultMap>
+
+    <insert id="insertInBody" useGeneratedKeys="true" keyProperty="measurementId">
+        INSERT INTO body_measurement_tb (
+            user_id, weight, skeletal_muscle_mass, body_fat_mass, measured_dt
+        )
+        VALUES (
+            #{userId}, #{weight}, #{skeletalMuscleMass}, #{bodyFatMass}, #{measuredDt}
+        )
+    </insert>
+
+    <select id="findByMeasurementId" resultMap="InBodyResultMap">
+        SELECT
+            measurement_id,
+            user_id,
+            weight,
+            skeletal_muscle_mass,
+            body_fat_mass,
+            measured_dt,
+            create_dt
+        FROM
+            body_measurement_tb
+        WHERE
+            measurement_id = #{measurementId}
+    </select>
+
+    <select id="findRecentInBodyByUserId" resultMap="InBodyResultMap">
+        SELECT
+            measurement_id,
+            user_id,
+            weight,
+            skeletal_muscle_mass,
+            body_fat_mass,
+            measured_dt,
+            create_dt
+        FROM
+            body_measurement_tb
+        WHERE
+            user_id = #{userId}
+        ORDER BY
+            measured_dt DESC, measurement_id DESC
+        LIMIT 1
+
+    </select>
+
+    <select id="findAllInBodyByUserId" resultMap="InBodyResultMap">
+        SELECT
+            measurement_id,
+            user_id,
+            weight,
+            skeletal_muscle_mass,
+            body_fat_mass,
+            measured_dt,
+            create_dt
+        FROM
+            body_measurement_tb
+        WHERE
+            user_id = #{userId}
+        ORDER BY
+            measured_dt DESC, measurement_id DESC
+    </select>
+</mapper>

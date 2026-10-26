@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.routeinai.backend.follow.mapper.FollowMapper">
+    <resultMap id="FollowResultMap" type="com.routeinai.backend.follow.entity.Follow">
+        <id property="followId" column="follow_id"/>
+        <result property="followerUserId" column="follower_user_id"/>
+        <result property="followingUserId" column="following_user_id"/>
+        <result property="createDt" column="create_dt"/>
+    </resultMap>
+
+    <select id="findByFollowerAndFollowing" resultMap="FollowResultMap">
+        SELECT
+            follow_id,
+            follower_user_id,
+            following_user_id,
+            create_dt
+        FROM
+            follow_tb
+        WHERE
+            follower_user_id = #{followerUserId}
+        AND
+            following_user_id = #{followingUserId}
+
+    </select>
+
+    <insert id="insertFollow">
+        INSERT INTO follow_tb (
+            follower_user_id,
+            following_user_id
+        )
+        VALUES (#{followerUserId}, #{followingUserId})
+    </insert>
+
+    <delete id="deleteFollow">
+        DELETE FROM follow_tb
+        WHERE
+            follower_user_id = #{followerUserId}
+        AND
+            following_user_id = #{followingUserId}
+    </delete>
+
+    <select id="findFollowerListByUserId" resultMap="FollowResultMap">
+        SELECT
+            follow_id,
+            follower_user_id,
+            following_user_id,
+            create_dt
+        FROM
+            follow_tb
+        WHERE
+            following_user_id = #{userId}
+        ORDER BY
+            create_dt DESC
+    </select>
+
+    <select id="findFollowingListByUserId" resultMap="FollowResultMap">
+        SELECT
+            follow_id,
+            follower_user_id,
+            following_user_id,
+            create_dt
+        FROM
+            follow_tb
+        WHERE
+            follower_user_id = #{userId}
+        ORDER BY
+            create_dt DESC
+    </select>
+</mapper>

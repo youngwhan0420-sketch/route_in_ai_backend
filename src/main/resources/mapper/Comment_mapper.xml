@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.routeinai.backend.board.mapper.CommentMapper">
+    <resultMap id="CommentResultMap" type="com.routeinai.backend.board.entity.Comment">
+        <id property="commentId" column="comment_id"/>
+        <result property="boardId" column="board_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="content" column="content"/>
+        <result property="isDeleted" column="is_deleted"/>
+        <result property="createDt" column="create_dt"/>
+        <result property="updateDt" column="update_dt"/>
+    </resultMap>
+
+    <update id="updateComment">
+        UPDATE comment_tb
+        SET
+            content = #{content},
+            update_dt = CURRENT_TIMESTAMP
+        WHERE
+            comment_id = #{commentId}
+    </update>
+
+    <update id="softDeleteComment">
+        UPDATE comment_tb
+        SET
+            is_deleted = 1,
+            update_dt = CURRENT_TIMESTAMP
+        WHERE
+            comment_id = #{commentId}
+    </update>
+
+    <insert id="insertComment" useGeneratedKeys="true" keyProperty="commentId">
+        INSERT INTO comment_tb (
+            board_id, user_id, parent_id, content
+        )
+        VALUES (
+            #{boardId},
+            #{userId},
+            #{parentId},
+            #{content}
+        )
+
+    </insert>
+
+    <select id="findByBoardId" resultMap="commentResultMap">
+        SELECT
+            comment_id,
+            board_id,
+            user_id,
+            parent_id,
+            content,
+            is_deleted,
+            create_dt,
+            update_dt
+        FROM
+            comment_tb
+        WHERE
+            board_id = #{boardId}
+        ORDER BY
+            create_dt ASC,
+            comment_id ASC
+    </select>
+
+    <select id="findByUserId" resultMap="commentResultMap">
+        SELECT
+            comment_id,
+            board_id,
+            user_id,
+            parent_id,
+            content,
+            is_deleted,
+            create_dt,
+            update_dt
+        FROM
+            comment_tb
+        WHERE
+            user_id = #{userId}
+        ORDER BY
+        create_dt DESC,
+        comment_id DESC
+    </select>
+
+    <select id="findByCommentId" resultMap="CommentResultMap">
+        SELECT
+            comment_id,
+            board_id,
+            user_id,
+            parent_id,
+            content,
+            is_deleted,
+            create_dt,
+            update_dt
+        FROM
+            comment_tb
+        WHERE
+            comment_id = #{commentId}
+    </select>
+
+
+</mapper>

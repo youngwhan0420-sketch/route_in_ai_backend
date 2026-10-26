@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.routeinai.backend.address.mapper.AddressMapper">
+    <resultMap id="AddressResultMap" type="com.routeinai.backend.address.entity.Address">
+        <id property="userId" column="user_id"/>
+        <result property="zipCode" column="zip_code"/>
+        <result property="baseAddress" column="base_address"/>
+        <result property="detailAddress" column="detail_address"/>
+        <result property="createDt" column="create_dt"/>
+        <result property="updateDt" column="update_dt"/>
+    </resultMap>
+
+    <select id="findByUserId" resultMap="AddressResultMap">
+        SELECT
+            user_id,
+            zip_code,
+            base_address,
+            detail_address,
+            create_dt,
+            update_dt
+        FROM
+            address_tb
+        WHERE
+            user_id = #{userId}
+    </select>
+
+    <update id="updateAddress">
+        UPDATE address_tb
+        SET
+            zip_code = #{zipCode},
+            base_address = #{baseAddress},
+            detail_address = #{detailAddress},
+            update_dt = CURRENT_TIMESTAMP
+        WHERE
+            user_id = #{userId}
+    </update>
+
+    <insert id="insertAddress">
+        INSERT INTO address_tb(
+        user_id, zip_code, base_address, detail_address)
+        VALUES (#{userId}, #{zipCode}, #{baseAddress}, #{detailAddress})
+    </insert>
+</mapper>

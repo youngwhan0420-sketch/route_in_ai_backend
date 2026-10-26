@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.routeinai.backend.board.mapper.BoardCourseMapper">
+    <resultMap id="BoardCourseResultMap" type="com.routeinai.backend.board.entity.BoardCourse">
+        <id property="boardId" column="board_id"/>
+        <result property="courseId" column="course_id"/>
+    </resultMap>
+
+    <select id="findByBoardId" resultMap="BoardCourseResultMap">
+        SELECT
+            board_id,
+            course_id
+        FROM
+            board_course_tb
+        WHERE
+            board_id = #{boardId}
+
+    </select>
+
+    <select id="findByCourseId" resultMap="BoardCourseResultMap">
+        SELECT
+            board_id,
+            course_id
+        FROM
+            board_course_tb
+        WHERE
+            course_id = #{courseId}
+    </select>
+
+    <insert id="insertBoardCourse">
+        INSERT INTO board_course_tb (
+            board_id, course_id
+        )
+        VALUES (
+            #{boardId}, #{courseId}
+        )
+
+    </insert>
+
+    <delete id="deleteBoardCourse">
+        DELETE FROM board_course_tb
+        WHERE
+            board_id = #{boardId}
+
+    </delete>
+
+</mapper>
